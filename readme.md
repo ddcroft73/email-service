@@ -1,8 +1,7 @@
 ### Email Micro Service
 
 This will be a service that I use on all my web projectst to send emails. It will be used
-to send plain text as well as HTML Emails. I'm going to use fastAPI to build the server, and I will also use CElery, but I dont' think I will need celery for a while. Its just something I 
-think will be a good idea for scalability.
+to send plain text as well as HTML Emails. I'm going to use fastAPI to build the server, and I will also use CElery.
 
 #### Tech Stack:
 fastAPI<br>
@@ -43,3 +42,13 @@ Send EMails. Thats it. It will have one endpoint (as of now) that I will define 
 5. The email is sent FIFO.
 
 There is error handling (still beefing it up), and the Celery part is still WIP.. Its all WIP.
+
+#### TODO:
+1. Implement Celery. As the app is now, it will handle one request per second and send the emails
+   without a problem. That's probably more than I'm going to need forawhile... ha.. lol. But I want
+   to go ahead and add it because I'm learning it and the reast of my app will rely heavily on Periodic
+   Tasks.
+2. Build the Info Web Page.
+3. Make sure the error handling is up to snuff. As is I really only know about `try: except:`. 
+4. Look into Docker... yeh... do I still need a venv? I'm not even sure.
+5. Make the tests hard core. I currently only have one that fires requests at the endpoint.
