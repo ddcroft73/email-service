@@ -1,0 +1,9 @@
+routes/__pycache__
+config/__pycache__
+schemas/__pycache__
+tests/__pycache__
+utils/__pycache__
+__pycache__
+/venv/*.*
+.env
+*.log
