@@ -1,7 +1,7 @@
 ### Email Micro Service
 
 This will be a service that I use on all my web projectst to send emails. It will be used
-to send plain text as well as HTML Emails. I'm going to use fastAPI to build the server, and I will also use CElery.
+to send plain text as well as HTML Emails. The main purpose will be verify Email emails, reset password emails, and anything pertaining to the apps core function. I'm going to use fastAPI to build the server, and I will also use CElery.
 
 #### Tech Stack:
 fastAPI<br>
