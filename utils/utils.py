@@ -15,9 +15,10 @@ from config.settings import settings
 from utils.smtp_email import smtp_email
 
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from time import sleep
-import asyncio
+import os
+
 '''
 def init_logger():
     logging.basicConfig(
@@ -54,3 +55,27 @@ def verify_token(credentials: HTTPAuthorizationCredentials=Depends(HTTPBearer())
     
     except PyJWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Invalid token")
+
+
+def create_token() -> str:
+    def days_to_expire(number_days): # fix this shizzz
+        current_time = datetime.now()
+        future_time = current_time + timedelta(days=number_days)
+        unix_timestamp = int(future_time.timestamp())
+        print(f'future_time: {future_time}')
+        return unix_timestamp
+    
+    number_of_days = 7  # Set the desired number of days for token expiration
+    expiration_timestamp = days_to_expire(number_of_days)
+
+    payload = {
+        'username': "YOLessTestThisShizzzzz",
+        'exp': expiration_timestamp,
+        'iss': 'your-issuer',
+        'sub': 'user-12345'
+    }
+
+    secret_key = os.getenv('SECRET_KEY')
+    new_token = jwt.encode(payload, secret_key, algorithm='HS256')
+
+    return new_token
