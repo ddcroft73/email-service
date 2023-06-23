@@ -53,15 +53,5 @@ class EmailTask(Task):
         # You can handle the timeout scenario or perform necessary actions here
 
 email_task = EmailTask()
-	
-
-
-
-@router.post("/send-email/" , response_model=MailResponse)
-def send_email(email: Email,  payload: dict=Depends(verify_token)):             
-     task = email_task.send_email.delay(email.dict())
-     #response = await dispatch_email(email)
-     response = {"task_id": task.id}
-     return JSONResponse(response)
 
 '''
