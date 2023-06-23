@@ -29,19 +29,13 @@ def init_logger():
     )
 '''
 async def dispatch_email(email: Email) -> dict:
-    # For now just send the email.... 
-    # This is where I'll passit on to celery....
-    
-    # send_mail.delay(email)
-    # return {'result': "Email passed over to celery, consider it done, 200"}
 
     response = await smtp_email.send_mail(email)   
     #sleep(3)     
     if response:
        print("sending mail...")
     else:
-       return {'result': 'Something went wrong. retrying in 10 seconds'}
-    
+       return {'result': 'Something went wrong.'}   
     # back to client   
     return {'result': f"email sent @ {datetime.now()}"}   
 
@@ -65,11 +59,11 @@ def create_token() -> str:
         print(f'future_time: {future_time}')
         return unix_timestamp
     
-    number_of_days = 7  # Set the desired number of days for token expiration
+    number_of_days = 7  
     expiration_timestamp = days_to_expire(number_of_days)
 
     payload = {
-        'username': "YOLessTestThisShizzzzz",
+        'username': "TesttheService",
         'exp': expiration_timestamp,
         'iss': 'your-issuer',
         'sub': 'user-12345'

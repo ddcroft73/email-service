@@ -5,10 +5,10 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from config.settings import settings
 from schemas.schema import Email
-import logging
+#import logging
 from datetime import datetime
 from time import sleep
-
+from dotenv import load_dotenv
 
 class SmtpEmail():
     def __init__(self, smtp_host: str, smtp_port: int, username: str, password: str):
@@ -39,8 +39,8 @@ class SmtpEmail():
 
         return message.as_string()
 
-    async def send_mail(self, email: Email) -> bool:
-        
+    def send_mail(self, email: Email) -> bool:        
+        #print(f'USERNAME: {self.username}, PASSWORD: {self.password}')        
         html = email.message.html if email.message.html != "" else ""
         text = email.message.text if email.message.text != "" else ""
 
@@ -52,30 +52,28 @@ class SmtpEmail():
            text
         ) 
         # simulate sending email.. so I dont wreck it.
-        sleep(1.5)
-        ''' 
+        sleep(3)
+        '''
         try:
-           with SMTP_SSL(self.smtp_host, self.smtp_port, context=create_default_context()) as email:
-             email.login(self.username, self.password)
-             email.sendmail(self.username, email_message.email_to, _message)
+           with SMTP_SSL(self.smtp_host, self.smtp_port, context=create_default_context()) as email_:
+             email_.login(self.username, self.password)
+             email_.sendmail(self.username, email.email_to, _message)
              
         except SMTPException as smtp_err:
-            print(er)
-            logging.error('SMTP Error:', smtp_err)
-            logging.error('Error occurred attempting to send mail', exc_info=True)
+            print('SMTP Error:', smtp_err)
+            print('Error occurred attempting to send mail', exc_info=True)
             return False    
         
         except Exception as er:
-           print(er)
-           logging.error('Error occurred attepmting to send mail')
+           #print(er)
+           print('Error occurred attepmting to send mail')
            return False               
-           '''
-        return True 
+         '''           
+        return True  
 
-
- 
-
-logging.basicConfig(filename='send-mail-ERRORS.log', level=logging.ERROR, force=True) 
+# By porting the output of Celery to a file, all my print statements also go to the file. I can't get the logger to
+# work right to save my life, so I just 86'd it and print any errors to the celery log file.
+#logging.basicConfig(filename='send-mail-ERRORS.log', level=logging.ERROR, force=True) 
 
 smtp_email = SmtpEmail(
     settings.SMTP_SERVER, 

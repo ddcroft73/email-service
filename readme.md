@@ -43,12 +43,14 @@ Send EMails. Thats it. It will have one endpoint (as of now) that I will define 
 
 There is error handling (still beefing it up), and the Celery part is still WIP.. Its all WIP.
 
+#### Run Service:
+```
+./start.sh
+```
+This script starts the server, loads the env variables and launchesCelery in a seperate process. It kills celery when the server is stopped. I plan to ultimately useDocker and Docker compose torun this service.
+
 #### TODO:
-1. Implement Celery. As the app is now, it will handle one request per second and send the emails
-   without a problem. That's probably more than I'm going to need forawhile... ha.. lol. But I want
-   to go ahead and add it because I'm learning it and the reast of my app will rely heavily on Periodic
-   Tasks.
-2. Build the Info Web Page.
-3. Make sure the error handling is up to snuff. As is I really only know about `try: except:`. 
-4. Look into Docker... yeh... do I still need a venv? I'm not even sure.
-5. Make the tests hard core. I currently only have one that fires requests at the endpoint.
+1. Build the Info Web Page.
+2. Make sure the error handling is up to snuff. As is I really only know about `try: except:`. 
+3. Look into Docker... yeh... do I still need a venv? I'm not even sure.
+4. Make the tests hard core. I currently only have one that fires requests at the endpoint.
