@@ -40,7 +40,7 @@ class SmtpEmail():
         return message.as_string()
 
     def send_mail(self, email: Email) -> bool:        
-        #print(f'USERNAME: {self.username}, PASSWORD: {self.password}')        
+        print(f'USERNAME: {self.username}, PASSWORD: {self.password}')        
         html = email.message.html if email.message.html != "" else ""
         text = email.message.text if email.message.text != "" else ""
 
@@ -52,7 +52,7 @@ class SmtpEmail():
            text
         ) 
         # simulate sending email.. so I dont wreck it.
-        sleep(3)
+        sleep(5)
         '''
         try:
            with SMTP_SSL(self.smtp_host, self.smtp_port, context=create_default_context()) as email_:

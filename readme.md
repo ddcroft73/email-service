@@ -41,16 +41,21 @@ Send EMails. Thats it. It will have one endpoint (as of now) that I will define 
 4. A response is sent back to the client.
 5. The email is sent FIFO.
 
-There is error handling (still beefing it up), and the Celery part is still WIP.. Its all WIP.
-
 #### Run Service:
+I seriously doubt anyone but me wil see this so I'm gonna forget the Venv, and pip stuff.
 ```
 ./start.sh
 ```
 This script starts the server, loads the env variables and launchesCelery in a seperate process. It kills celery when the server is stopped. I plan to ultimately useDocker and Docker compose torun this service.
 
 #### TODO:
-1. Build the Info Web Page.
-2. Make sure the error handling is up to snuff. As is I really only know about `try: except:`. 
-3. Look into Docker... yeh... do I still need a venv? I'm not even sure.
-4. Make the tests hard core. I currently only have one that fires requests at the endpoint.
+- Tone down the file structure. I don't need all the directories. This service is small but when I began, I thought
+  it would be bigger. So Drop, `routes`, `schemas` and `config`.
+- Get the Celery portion, `tasks` finalized:
+  It works fine forwhat it is, and what I need. Decide if the class is worth it or just keep the function. 
+- For gods sake figure out logger!! Like why the hell does it only ever halfway work!? Maybe it's got something to do with
+  how the modules are loading as to why Only info works and not error, vice versa, and why I can't ever get it to consistently write to file!!   
+- Build the Info Web Page.
+- Make sure the error handling is up to snuff. As is I really only know about `try: except:`. 
+- Containerize the app. Have been enjoying what I'm learning with Docker, and Docker Compose.
+- Make the tests hard core. I currently only have one that fires requests at the endpoint.
