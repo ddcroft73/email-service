@@ -6,10 +6,10 @@ from fastapi.responses import JSONResponse
 cwd = os.getcwd()
 sys.path.append(cwd)
 
-from schemas.schema import Email, Message
+from schema import Email, Message
 from utils.utils import create_token
 from test_html_template import html as verify_email_test_code
-from config.settings import settings 
+from settings import settings 
 import asyncio, aiohttp
 
 # An email mustbe setup like so before itis dispatched to the service. 

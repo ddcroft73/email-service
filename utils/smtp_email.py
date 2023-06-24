@@ -3,8 +3,8 @@ from smtplib import SMTP_SSL, SMTPException
 from ssl import create_default_context
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from config.settings import settings
-from schemas.schema import Email
+from settings import settings
+from schema import Email
 #import logging
 from datetime import datetime
 from time import sleep
@@ -52,8 +52,8 @@ class SmtpEmail():
            text
         ) 
         # simulate sending email.. so I dont wreck it.
-        sleep(5)
-        '''
+        #sleep(5)
+        
         try:
            with SMTP_SSL(self.smtp_host, self.smtp_port, context=create_default_context()) as email_:
              email_.login(self.username, self.password)
@@ -68,7 +68,8 @@ class SmtpEmail():
            #print(er)
            print('Error occurred attepmting to send mail')
            return False               
-         '''           
+
+        print(f'Email: Sent to: {email.email_to}')       
         return True  
 
 # By porting the output of Celery to a file, all my print statements also go to the file. I can't get the logger to

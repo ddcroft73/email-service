@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-celery -A celery_app worker --loglevel=info --logfile=logs/celery.log
+celery -A celery_app worker --loglevel=info --logfile=logs/celery.log #--pool=gevent 

@@ -10,8 +10,8 @@ from fastapi.security import (
 import jwt
 from jwt.exceptions import PyJWTError
 
-from schemas.schema import Email
-from config.settings import settings
+from schema import Email
+from settings import settings
 from utils.smtp_email import smtp_email
 
 import logging

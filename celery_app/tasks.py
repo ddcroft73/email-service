@@ -1,5 +1,5 @@
 from celery_app.celery import app
-from schemas.schema import Email, Message
+from schema import Email, Message
 from utils.smtp_email import smtp_email
 from celery import Task
 from celery.utils.log import get_task_logger

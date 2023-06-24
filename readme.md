@@ -5,10 +5,12 @@ to send plain text as well as HTML Emails. The main purpose will be verify Email
 
 #### Tech Stack:
 fastAPI<br>
-Celery
+Celery<br>
+ - Not using a traditional messageing broker like Redis, or RabbitMQ. I'm using the `filesystem://` to send messages.
+ yeh, apparently whats going on is you create adirectory for the services to use asa means of communication and they send messages that way. it's slowwer than my usual RabbitMQ, but it gets thejob done and its less software to add to the stack.
 
 #### Purpose:
-Send EMails. Thats it. It will have one endpoint (as of now) that I will define later. 
+Send Emails. Thats it. It will have one endpoint. Imay need to add another/others when I totally figure out exactly what I am doing.  
 
 #### EndPoint:
 /send-email/
@@ -35,11 +37,11 @@ Send EMails. Thats it. It will have one endpoint (as of now) that I will define 
 ```
 #### Workflow
 
-1. A request is sent to the server with all it needs to be mailed.
-2. The server verifies the clients credentials via dependencies.
-3. The request is passed to Celery, with all the relevent data.
-4. A response is sent back to the client.
-5. The email is sent FIFO.
+1. A request is sent to the server; The request will be sent with all the necessary info to send the email.
+2. The server verifies the clients credentials via dependencies; the data within will have been validated before it ever leaves the client as to limit the amount of work this service has to do.
+3. The email object is seralized into a dict and passed to the  Celery Task predefined to handle sending emails.
+4. A response is sent back to the client with the task ID confirming that the email is being processed.
+5. The email is then dispatched on a FIFO basis.
 
 #### Run Service:
 I seriously doubt anyone but me wil see this so I'm gonna forget the Venv, and pip stuff.
