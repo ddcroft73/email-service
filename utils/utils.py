@@ -19,15 +19,6 @@ from datetime import datetime, timedelta
 from time import sleep
 import os
 
-'''
-def init_logger():
-    logging.basicConfig(
-        filename='email-sent.log', 
-        level=logging.INFO, 
-        format='%(asctime)s %(levelname)s: %(message)s', 
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
-'''
 async def dispatch_email(email: Email) -> dict:
 
     response = await smtp_email.send_mail(email)   

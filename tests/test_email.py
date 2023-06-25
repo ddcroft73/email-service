@@ -1,4 +1,4 @@
-import os, sys, time, requests
+import os, sys, time, requests,asyncio, aiohttp
 from dotenv import load_dotenv
 
 from fastapi.responses import JSONResponse
@@ -8,11 +8,12 @@ sys.path.append(cwd)
 
 from schema import Email, Message
 from utils.utils import create_token
-from test_html_template import html as verify_email_test_code
+from test_html_template import html 
 from settings import settings 
-import asyncio, aiohttp
 
-# An email mustbe setup like so before itis dispatched to the service. 
+
+# An email mustbe setup like so before itis dispatched to the service. It wiull be validated on the client... in JS, YEH, effing JAVASCRIPT.
+# Killme now.
 
 email = Email(
     email_to="croftdanny1973@gmail.com",
@@ -20,17 +21,11 @@ email = Email(
     subject="Test Email",
     message=Message(
         text="This is a test Email, THe Text Plain Text Portion",
-        html=verify_email_test_code
+        html=html
     )    
 )
 
 load_dotenv()
-
-
-async def fetch_data(url, headers, payload):
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url,  headers=headers, json=payload) as response:            
-            return await response.json()
 
 def test_email(token):
     url = 'http://localhost:8000/send-email/'
@@ -39,22 +34,21 @@ def test_email(token):
         'Authorization': f'Bearer {token}',
         'Content-Type': 'application/json'
     }
-    '''
-    for cnt in range(0, 1):
-        time.sleep(1)
-        response = await fetch_data(url, headers=headers, payload=email.dict())
-        print(response)
-        
-    print(f'Sent: {cnt+1} emails')
-    '''
-
-    # Use this to send requests back to back, usually set to only one.
+    
     for _ in range(1):
         time.sleep(1)
-        response = requests.request("POST", url, headers=headers, json=email.dict())
+
+        response = requests.request(
+            "POST", 
+            url, headers=headers, 
+            json=email.dict()
+        )
+
         print(response.json())
 
-token:  str = create_token()
 
-#asyncio.run(test_email(token))
+
+
+token:  str = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3R0aGVTZXJ2aWNlIiwiZXhwIjoxNjg4MjU0NjUwLCJpc3MiOiJ5b3VyLWlzc3VlciIsInN1YiI6InVzZXItMTIzNDUifQ.8bZgW0xObI7HePQkbeMqVktjSsioHdicKM8u72sCatY' #reate_token()
+print(token)
 test_email(token)

@@ -9,6 +9,7 @@ from schema import Email
 from datetime import datetime
 from time import sleep
 from dotenv import load_dotenv
+import random
 
 class SmtpEmail():
     def __init__(self, smtp_host: str, smtp_port: int, username: str, password: str):
@@ -40,7 +41,7 @@ class SmtpEmail():
         return message.as_string()
 
     def send_mail(self, email: Email) -> bool:        
-        print(f'USERNAME: {self.username}, PASSWORD: {self.password}')        
+        #print(f'USERNAME: {self.username}, PASSWORD: {self.password}')        
         html = email.message.html if email.message.html != "" else ""
         text = email.message.text if email.message.text != "" else ""
 
@@ -52,8 +53,8 @@ class SmtpEmail():
            text
         ) 
         # simulate sending email.. so I dont wreck it.
-        #sleep(5)
-        
+        sleep(random.randint(5,25))
+        '''
         try:
            with SMTP_SSL(self.smtp_host, self.smtp_port, context=create_default_context()) as email_:
              email_.login(self.username, self.password)
@@ -69,7 +70,8 @@ class SmtpEmail():
            print('Error occurred attepmting to send mail')
            return False               
 
-        print(f'Email: Sent to: {email.email_to}')       
+        print(f'Email: Sent to: {email.email_to}')   
+        '''    
         return True  
 
 # By porting the output of Celery to a file, all my print statements also go to the file. I can't get the logger to
